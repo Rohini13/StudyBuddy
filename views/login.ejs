@@ -5,15 +5,70 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>register</title>
+    <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css' />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style2.css">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style3.css">
+    <title>Login</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        setTimeout(function() {
+            $("#messages").fadeOut().empty();
+        }, 1000);
+    </script>
 </head>
+
 <body>
-<form method="post" action="/login">
-    <label for="username">Username</label><br>
-    <input name="username" type="text"><br>
-    <label for="password">Password</label><br>
-    <input name="password" type="password"><br>
-    <button type="submit">submit</button>
-</form>
+<div>
+    <nav class="navbar navbar-expand-md navbar-dark bg-transparent">
+        <a class="navbar-brand" href="/"><img src="/images/logo2.png" height="55" width="80" border-radius="50%"></img></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+<!--                <li class="nav-item active">-->
+<!--                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>-->
+<!--                </li>-->
+                <!--            <li class="nav-item dropdown">-->
+                <!--                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
+                <!--                <div class="dropdown-menu" aria-labelledby="dropdown01">-->
+                <!--                    <a class="dropdown-item" href="#">Action</a>-->
+                <!--                    <a class="dropdown-item" href="#">Another action</a>-->
+                <!--                    <a class="dropdown-item" href="#">Something else here</a>-->
+                <!--                </div>-->
+                <!--            </li>-->
+            </ul>
+            <ul class="navbar-nav rounded-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login<span class="sr-only">(current)</span></a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/register">Register<span class="sr-only">(current)</span></a>
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>-->
+<!--                </li>-->
+            </ul>
+            <!--        <form class="form-inline my-2 my-lg-0">-->
+            <!--            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">-->
+            <!--            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>-->
+            <!--        </form>-->
+        </div>
+    </nav>
+</div>
+<%- messages('message', locals) %>
+<div class="login">
+    <h1 style="border-style: solid; border-color: white; background: transparent">Login</h1><br>
+    <form method="post" action="/login">
+        <input type="text" name="username" placeholder="Username" required="required" />
+        <input type="password" name="password" placeholder="Password" required="required" /><br><br>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Let me in!</button>
+    </form>
+</div>
+
+<script src='/bower_components/jquery/dist/jquery.js'></script>
+<script src='/bower_components/bootstrap/dist/js/bootstrap.js'></script>
 </body>
 </html>

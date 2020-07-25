@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel='stylesheet' href='/bower_components/bootstrap/dist/css/bootstrap.css' />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/style2.css">
+    <title><%=user.name%>'s Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        setTimeout(function() {
+            $("#messages").fadeOut().empty();
+        }, 1000);
+    </script>
+    <style>
+        body {
+            background-color: #a4a5a7;
+            background: linear-gradient(180deg, #76777a 0%, #39393c 37%, #000108 100%) fixed;
+        }
+        .post{
+            opacity:70%;
+            height: 100%;
+        }
+        .center{
+            margin: auto;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-transparent">
+    <a class="navbar-brand" href="/"><img src="/images/logo2.png" height="55" width="80" border-radius="50%"></img></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/main">Home<span class="sr-only">(current)</span></a>
+            </li>
+            <% if(viewer=='me'){%>
+            <li class="nav-item">
+                <a class="nav-link" href="/main/profile/myposts">My Posts<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/main/profile/bookmarks">Favourite Posts<span class="sr-only">(current)</span></a>
+            </li>
+            <%}%>
+            <li class="nav-item">
+            <% if(viewer=='other'){%>
+                <a class="nav-link" href="/main/<%= user.username%>/AllPosts">Posts By <%= user.name%></a>
+            <%}%>
+            </li>
+        </ul>
+        <ul class="navbar-nav rounded-right">
+            <li class="nav-item">
+                <a class="nav-link" href="/<%=url%>">Back<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<%- messages('message', locals) %>
+<div class="center">
+
+    <figure>
+        <% var temp = files.find(function (value) { return value._id.toString()===user.pic })%>
+        <%if(temp!==undefined && temp!==null){%>
+    <img style="height: 250px; width: 250px; border-radius: 50%;border-style: solid; border-color: white; padding: 4px" src="/main/image/<%=temp.filename%>" alt="profile pic">
+        <%}else{%>
+            <img style="height: 250px; width: 250px; border-radius: 50%;border-style: solid; border-color: white; padding: 4px" src="\images\profile.png" alt="image">
+        <%}%>
+    </figure>
+
+</div>
+
+<div class="login" style="margin-top: 4%">
+    <%if(viewer=='me'){%>
+        <div align="center">
+        <form method="post" action="/main/editProfile/removepic">
+            <button type="submit" class="btn btn-danger" style="background-color: firebrick">Remove profile picture</button>
+        </form></div>
+        <br><div align="center">
+        <form method="post" action="/main/editProfile/updatepic" enctype="multipart/form-data">
+            <input type="file" name="pic" required>
+            <button type="submit" class="btn btn-primary">Change profile picture</button>
+        </form></div><br>
+        <%}%>
+    <form method="post" action="/main/editProfile">
+        <% if(viewer=='me'){%>
+        <label style="color:white">
+            Name
+        </label>
+        <input type="text" name="name" placeholder="<%= user.name%>"/>
+
+        <label style="color:white">
+            UserName
+        </label>
+        <input type="text" name="username" placeholder="<%= user.username%>"/>
+        <label style="color:white">
+            Email
+        </label>
+        <input type="text" name="email" placeholder="<%= user.email%>"/>
+        <label style="color:white">
+            Password
+        </label>
+        <input type="password" name="password" placeholder="********"/><br><br>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Save Changes</button>
+        <%}%>
+            <% if(viewer=='other'){%>
+                <label style="color:white">
+                    Name
+                </label>
+                <input type="text" name="name" placeholder="<%= user.name%>" disabled/>
+
+                <label style="color:white">
+                    UserName
+                </label>
+            <input type="text" name="username" placeholder="<%= user.username%>" disabled/>
+            <label style="color:white">
+                Email
+            </label>
+                <input type="text" name="email" placeholder="<%= user.email%>" disabled/>
+            <%}%>
+    </form>
+    <br>
+</div>
+
+<script src='/bower_components/jquery/dist/jquery.js'></script>
+<script src='/bower_components/bootstrap/dist/js/bootstrap.js'></script>
+</body>
+</html>
